@@ -21,8 +21,8 @@ if __name__ == '__main__':
         transforms.ToTensor(),
     ])
     # 训练数据
-    train_dataset = datasets.MNIST(root="../Datasets/MNIST/train", train=True, transform=transform_train, download=True)
-    test_dataset = datasets.MNIST(root="../Datasets/MNIST/test", train=False, transform=transform_test, download=True)
+    train_dataset = datasets.CIFAR10(root="../Datasets/CIFAR10/train", train=True, transform=transform_train, download=True)
+    test_dataset = datasets.CIFAR10(root="../Datasets/CIFAR10/test", train=False, transform=transform_test, download=True)
     print(f"训练datasets的长度：{train_dataset.__len__()}，测试datasets的长度：{test_dataset.__len__()}")  # 50000 10000
     # 数据加载器
     train_dataloader = DataLoader(dataset=train_dataset, batch_size=64, shuffle=True, num_workers=0)
@@ -34,22 +34,22 @@ if __name__ == '__main__':
     print("使用设备：", device)
 
     # 定义网络
+    torch.manual_seed(13)
     model = resnet18().to(device)
     optimizer = Adam(model.parameters(), lr=1e-3)
     loss_fun = nn.CrossEntropyLoss()
     loss_fun.to(device)
 
-    epoch = 50
+    epoch = 20
     total_train_step = 0  # 记录训练次数
     total_test_step = 0  # 记录测试次数
     best_acc = 0
 
     writer=SummaryWriter("ResNetlogs")
-    input_data = torch.randn((64, 3, 28, 28))
-    input_data = input_data.to(device)
-    #writer.add_graph(model, input_data)
-    writer.close()
-    exit(0)
+    # input_data = torch.randn((64, 3, 28, 28))
+    # input_data = input_data.to(device)
+    # writer.add_graph(model, input_data)
+    # writer.close()
     for e in range(epoch):
         print("================= EPOCH: {}/{} ===============".format(e + 1, epoch))
         # Train
@@ -57,7 +57,7 @@ if __name__ == '__main__':
         total_train_loss = 0
         for data in train_dataloader:
             imgs, target = data
-            # print(imgs.shape, target) #torch.Size([64, 1, 28, 28])
+            #print(imgs.shape, target) #torch.Size([64, 3, 32, 32])
             imgs = imgs.to(device)
             target = target.to(device)
             output = model(imgs)
@@ -74,7 +74,7 @@ if __name__ == '__main__':
         #     if total_train_step % 100 == 0:
         #        print(f"训练次数 {total_train_step} ， 测试损失值 {loss.item()}")
 
-        # print(f"整体训练集的Loss：{total_train_loss}")
+        print(f"整体训练集的Loss：{total_train_loss}")
 
         # 测试步骤开始
         model.eval()
@@ -101,7 +101,7 @@ if __name__ == '__main__':
         if Accuacy > best_acc:
             best_acc = Accuacy
             print("整体测试集的best Accuacy",best_acc)
-            torch.save(model.state_dict(), "LeNet_param_best.pkl")
+            torch.save(model.state_dict(), "resnet18_param_best.pkl")
 
     writer.close()
     print("训练结束，模型已保存")

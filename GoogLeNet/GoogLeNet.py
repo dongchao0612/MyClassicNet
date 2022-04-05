@@ -106,4 +106,4 @@ class GoogLeNet(nn.Module):
 
 if __name__ == '__main__':
     #summary(Inception(1,1,(1,1),(1,1),1), (1, 28, 28), device="cpu")
-    summary(GoogLeNet(), (3, 28, 28), device="cpu")
+    summary(GoogLeNet(), (3, 32, 32), device="cpu")

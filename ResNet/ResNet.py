@@ -255,7 +255,7 @@ def resnext101_32x8d(num_classes=1000, include_top=True, is_se=False):
 
 
 if __name__ == '__main__':
-    # summary(resnet18(), (3, 7, 7), device="cpu")
-    # summary(resnet34(), (3, 7, 7), device="cpu")
-    # summary(resnet50(), (3, 7, 7), device="cpu")
-    summary(resnet101(), (3, 7, 7), device="cpu")
+    #summary(resnet18(), (3, 32, 32), device="cpu")
+    #summary(resnet34(), (3, 32, 32), device="cpu")
+    #summary(resnet50(), (3, 32, 32), device="cpu")
+    summary(resnet101(), (3, 32, 32), device="cpu")
