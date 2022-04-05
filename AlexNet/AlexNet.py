@@ -1,4 +1,5 @@
 import torch.nn as nn
+from torchsummary import summary
 
 
 class AlexNet(nn.Module):
@@ -50,4 +51,4 @@ class AlexNet(nn.Module):
 
 
 if __name__ == '__main__':
-    print(AlexNet())
+    summary(AlexNet(), (3, 32, 32), device="cpu")

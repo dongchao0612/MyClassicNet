@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torchsummary import summary
 
 
 def conv(in_channels, out_channels, kernel_size, stride=1, padding=0):
@@ -104,7 +105,5 @@ class GoogLeNet(nn.Module):
 
 
 if __name__ == '__main__':
-    net = GoogLeNet()
-    in_ = torch.randn((64, 3, 32, 32))
-    out_ = net(in_)
-    print(out_.shape)
+    #summary(Inception(1,1,(1,1),(1,1),1), (1, 28, 28), device="cpu")
+    summary(GoogLeNet(), (3, 28, 28), device="cpu")

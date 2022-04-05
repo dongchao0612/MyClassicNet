@@ -12,6 +12,7 @@ build/
 develop-eggs/
 dist/
 downloads/
+/Datasets
 eggs/
 .eggs/
 lib/
@@ -129,4 +130,3 @@ dmypy.json
 .pyre/
 
 
-/Datasets
